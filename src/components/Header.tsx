@@ -72,6 +72,13 @@ export default function Header({ cart, onRemoveFromCart }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/account')}
+          >
+            <Icon name="User" size={20} />
+          </Button>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="relative">

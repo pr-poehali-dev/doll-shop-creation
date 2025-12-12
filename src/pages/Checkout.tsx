@@ -63,12 +63,20 @@ export default function Checkout() {
       return;
     }
 
-    toast({
-      title: 'Заказ оформлен! 🎉',
-      description: `Номер заказа: #${Math.floor(Math.random() * 100000)}. Мы свяжемся с вами в ближайшее время.`,
+    const orderNumber = Math.floor(Math.random() * 100000);
+    
+    navigate('/order-success', {
+      state: {
+        orderData: {
+          orderNumber,
+          cart,
+          formData,
+          totalPrice,
+          deliveryPrice,
+          finalPrice,
+        }
+      }
     });
-
-    setTimeout(() => navigate('/'), 2000);
   };
 
   if (cart.length === 0) {
