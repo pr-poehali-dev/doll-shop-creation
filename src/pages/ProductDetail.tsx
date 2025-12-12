@@ -160,10 +160,11 @@ export default function ProductDetail() {
 
   const rarity = rarityConfig[product.rarity];
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (productToAdd?: Product) => {
+    const targetProduct = productToAdd || product;
     toast({
       title: 'Добавлено в корзину',
-      description: `${product.name} (${quantity} шт.) - ${(product.price * quantity).toLocaleString()} ₽`,
+      description: `${targetProduct.name} (${productToAdd ? 1 : quantity} шт.) - ${(targetProduct.price * (productToAdd ? 1 : quantity)).toLocaleString()} ₽`,
     });
   };
 

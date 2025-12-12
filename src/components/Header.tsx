@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
@@ -23,6 +24,7 @@ interface HeaderProps {
 }
 
 export default function Header({ cart, onRemoveFromCart }: HeaderProps) {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('home');
 
   const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
@@ -117,7 +119,11 @@ export default function Header({ cart, onRemoveFromCart }: HeaderProps) {
                           {totalPrice.toLocaleString()} ₽
                         </span>
                       </div>
-                      <Button className="w-full" size="lg">
+                      <Button 
+                        className="w-full" 
+                        size="lg"
+                        onClick={() => navigate('/checkout', { state: { cart } })}
+                      >
                         Оформить заказ
                       </Button>
                     </div>
