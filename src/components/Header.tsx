@@ -75,6 +75,13 @@ export default function Header({ cart, onRemoveFromCart }: HeaderProps) {
           <Button
             variant="ghost"
             size="icon"
+            onClick={() => navigate('/favorites')}
+          >
+            <Icon name="Heart" size={20} />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => navigate('/account')}
           >
             <Icon name="User" size={20} />

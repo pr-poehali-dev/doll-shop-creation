@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import { useFavorites } from '@/context/FavoritesContext';
 
 export interface Product {
   id: number;
@@ -28,7 +29,9 @@ const rarityConfig = {
 
 export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const navigate = useNavigate();
+  const { toggleFavorite, isFavorite } = useFavorites();
   const rarity = rarityConfig[product.rarity];
+  const favorite = isFavorite(product.id);
 
   const handleCardClick = () => {
     navigate(`/product/${product.id}`);
@@ -37,6 +40,11 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     onAddToCart(product);
+  };
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleFavorite(product);
   };
 
   return (
@@ -53,6 +61,16 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         <Badge className={`absolute top-3 right-3 ${rarity.color}`}>
           {rarity.label}
         </Badge>
+        <Button
+          variant="ghost"
+          size="icon"
+          className={`absolute top-3 left-3 bg-background/80 backdrop-blur hover:bg-background transition-colors ${
+            favorite ? 'text-red-500 hover:text-red-600' : 'text-muted-foreground hover:text-foreground'
+          }`}
+          onClick={handleToggleFavorite}
+        >
+          <Icon name={favorite ? 'Heart' : 'Heart'} size={20} fill={favorite ? 'currentColor' : 'none'} />
+        </Button>
         {!product.inStock && (
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
             <Badge variant="destructive" className="text-sm">Нет в наличии</Badge>
