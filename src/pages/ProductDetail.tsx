@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 import { Product } from '@/components/ProductCard';
+import ProductCard from '@/components/ProductCard';
 
 const mockProducts: Product[] = [
   {
@@ -378,6 +379,32 @@ export default function ProductDetail() {
                 </div>
               </TabsContent>
             </Tabs>
+          </div>
+        </div>
+
+        <Separator className="my-16" />
+
+        <div className="space-y-8 animate-fade-in">
+          <div className="text-center space-y-2">
+            <h2 className="font-heading font-bold text-3xl md:text-4xl">
+              Похожие товары
+            </h2>
+            <p className="text-muted-foreground">
+              Другие куклы из серии {product.series}
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {mockProducts
+              .filter(p => p.series === product.series && p.id !== product.id)
+              .slice(0, 4)
+              .map((relatedProduct) => (
+                <ProductCard
+                  key={relatedProduct.id}
+                  product={relatedProduct}
+                  onAddToCart={handleAddToCart}
+                />
+              ))}
           </div>
         </div>
       </div>
