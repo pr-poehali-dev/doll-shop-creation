@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -26,10 +27,23 @@ const rarityConfig = {
 };
 
 export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
+  const navigate = useNavigate();
   const rarity = rarityConfig[product.rarity];
 
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onAddToCart(product);
+  };
+
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 animate-fade-in">
+    <Card 
+      className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 animate-fade-in cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-muted/50 to-muted">
         <img
           src={product.image}
@@ -66,7 +80,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
       <CardFooter className="p-4 pt-0">
         <Button
           className="w-full font-heading font-semibold"
-          onClick={() => onAddToCart(product)}
+          onClick={handleAddToCart}
           disabled={!product.inStock}
         >
           {product.inStock ? (
